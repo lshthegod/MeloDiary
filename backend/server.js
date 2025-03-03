@@ -1,6 +1,7 @@
 import express from 'express';
 import pg from 'pg';
 import config from './config/postgresql.js';
+import routes from './routes/index.js';
 
 // Swagger
 import swaggerUi from 'swagger-ui-express';
@@ -12,18 +13,18 @@ const { Pool } = pg;
 
 // Express 앱 생성
 const app = express();
+app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 const port = 3000;
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
-console.log(swaggerSpec);
 
 // PostgreSQL 연결 설정
 const pool = new Pool(config);
+export default pool;
 
 // Swagger UI 경로 설정
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 
 // 기본 라우트
 app.get('/', async (req, res) => {
@@ -44,6 +45,8 @@ app.get('/', async (req, res) => {
     res.status(500).send('데이터베이스 연결 오류');
   }
 });
+
+app.use("/api", routes);
 
 // 서버 시작
 app.listen(port, () => {
