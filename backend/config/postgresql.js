@@ -10,8 +10,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const config = {
-    connectionString: process.env.DATABASE_URL, // server.js에서 .env가 로드되었으므로 바로 사용 가능
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false, // 프로덕션 환경 고려
+    connectionString: process.env.DATABASE_URL,
 };
 
 export default config;
