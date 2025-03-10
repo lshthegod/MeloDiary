@@ -13,8 +13,12 @@ const { Pool } = pg;
 
 // Express 앱 생성
 const app = express();
-app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 const port = 3000;
+
+// 미들웨어
+app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
+app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
+
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

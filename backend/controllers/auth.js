@@ -20,3 +20,7 @@ export async function login(req, res) {
     res.status(500).json({ message: '서버 에러', error: error.message });
   }
 }
+
+export async function signup(req, res) {
+  const { email, password } = req.body;
+}
