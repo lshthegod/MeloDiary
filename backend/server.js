@@ -13,8 +13,12 @@ const { Pool } = pg;
 
 // Express 앱 생성
 const app = express();
-app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 const port = 3000;
+
+// 미들웨어
+app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
+app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
+
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
@@ -26,7 +30,7 @@ export default pool;
 // Swagger UI 경로 설정
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// 기본 라우트
+/* 기본 라우터
 app.get('/', async (req, res) => {
   try {
     // 풀에서 클라이언트를 가져옵니다.
@@ -45,10 +49,20 @@ app.get('/', async (req, res) => {
     res.status(500).send('데이터베이스 연결 오류');
   }
 });
+*/
+app.use(routes);
 
-app.use("/api", routes);
+pool.connect()
+  .then(client => {
+    console.log('데이터베이스에 성공적으로 연결되었습니다.');
+    client.release(); // 연결 반환
+  })
+  .catch(err => {
+    console.error('데이터베이스 연결에 실패했습니다.', err.stack);
+  });
 
 // 서버 시작
 app.listen(port, () => {
-  console.log(`테스트, Server is running on http://localhost:${port}`);
+  console.log(`서버가 ${port}번 포트에서 실행 중입니다.`);
+  console.log(`http://localhost:${port}에서 접속할 수 있습니다.`);
 });

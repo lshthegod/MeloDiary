@@ -10,3 +10,12 @@ export const login = async (email, password) => {
     }
     return jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn });
 };
+
+export const signup = async (username, email, password) => {
+    const hashedPassword = await bcrypt.hash(password, 10); // 비밀번호 해시화
+    const user = await User.create({ username, email, password: hashedPassword }); // 해시된 비밀번호 저장
+    if (!user) {
+        throw new Error('회원가입 : DB 연결 실패');
+    }
+    return { id: user.id, username: user.username, email: user.email };
+}
