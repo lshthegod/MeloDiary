@@ -47,11 +47,11 @@
  *               email:
  *                 type: string
  *                 description: 사용자의 이메일 주소
- *                 example: "user@example.com"
+ *                 example: "testuser@example.com"
  *               password:
  *                 type: string
  *                 description: 사용자의 비밀번호
- *                 example: "yourpassword"
+ *                 example: "securePassoword123!"
  *     responses:
  *       '200':
  *         description: 로그인 성공, JWT 토큰 반환
@@ -89,4 +89,70 @@
  *                 error:
  *                   type: string
  *                   example: "에러 메시지"
+ */
+
+/**
+ * @swagger
+ * /signup/submit:
+ *   post:
+ *     summary: "사용자 회원가입"
+ *     description: "새로운 사용자를 회원가입합니다."
+ *     tags:
+ *       - "Auth"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - email
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: "testuser"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "testuser@example.com"
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: "securePassword123!"
+ *     responses:
+ *       201:
+ *         description: "회원가입 성공"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "회원가입 성공"
+ *       401:
+ *         description: "회원가입 실패"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "회원가입 실패"
+ *       500:
+ *         description: "서버 에러 발생"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "서버 에러"
+ *                 error:
+ *                   type: string
+ *                   example: "Internal Server Error"
  */

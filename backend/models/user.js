@@ -12,8 +12,8 @@ class User {
   // 유저 저장 (CREATE)
   static async create({ username, email, password }) {
     const query = `
-      INSERT INTO users (id, username, email, password)
-      VALUES (gen_random_uuid(), $1, $2, $3) RETURNING *;
+      INSERT INTO users (username, email, password)
+      VALUES ($1, $2, $3) RETURNING *;
     `;
     const values = [username, email, password];
     const result = await pool.query(query, values);

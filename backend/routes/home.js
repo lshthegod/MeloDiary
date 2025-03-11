@@ -3,9 +3,9 @@ import { login, signup } from '../controllers/auth.js';
 
 const router = express.Router();
 
-// get /login
-router.post('/login', login);
-// get /signup
-router.post('/signup/submit', signup);
+router.get('/', (req,res) => {
+    console.log("home에 방문하였습니다.");
+    res.send("Hello World!");
+});
 
 export default router;
