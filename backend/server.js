@@ -2,11 +2,15 @@ import express from 'express';
 import pg from 'pg';
 import config from './config/postgresql.js';
 import routes from './routes/index.js';
+import cookieParser from 'cookie-parser';
 
 // Swagger
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerOptions from './config/swaggerOptions.js';
+
+// 미들웨어
+import authenticateJWT from './middlewares/auth.js';
 
 // PostgreSQL 클라이언트 생성
 const { Pool } = pg;
@@ -18,7 +22,8 @@ const port = 3000;
 // 미들웨어
 app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
-
+app.use(cookieParser());
+app.use(authenticateJWT);
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
