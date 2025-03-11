@@ -51,7 +51,7 @@
  *               password:
  *                 type: string
  *                 description: 사용자의 비밀번호
- *                 example: "securePassoword123!"
+ *                 example: "securePassword123!"
  *     responses:
  *       '200':
  *         description: 로그인 성공, JWT 토큰 반환
