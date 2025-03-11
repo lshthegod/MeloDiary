@@ -23,7 +23,7 @@ const port = 3000;
 app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
 app.use(cookieParser());
-app.use(authenticateJWT);
+// app.use(authenticateJWT); 모든 라우터에 대한 로그인 인증 보안
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
@@ -69,5 +69,5 @@ pool.connect()
 // 서버 시작
 app.listen(port, () => {
   console.log(`서버가 ${port}번 포트에서 실행 중입니다.`);
-  console.log(`http://localhost:${port}에서 접속할 수 있습니다.`);
+  console.log(`http://localhost:${port} 에서 접속할 수 있습니다.`);
 });
