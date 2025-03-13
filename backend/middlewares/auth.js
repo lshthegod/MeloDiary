@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { secret } from "../config/jwt.js";
-
+/*
 const authenticateJWT = (req, res, next) => {
     // 먼저 쿠키에서 토큰을 가져옵니다.
     let token = req.cookies && req.cookies.token;
@@ -15,12 +15,12 @@ const authenticateJWT = (req, res, next) => {
     }
 
     if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized" }); // redirect to home 으로 변경 필요
     }
 
     jwt.verify(token, secret, (err, user) => {
         if (err) {
-            return res.status(403).json({ message: "Forbidden" });
+            return res.status(403).json({ message: "Forbidden" }); // redirect to home 으로 변경 필요?
         }
         req.user = user;
         next();
@@ -28,11 +28,9 @@ const authenticateJWT = (req, res, next) => {
 };
 
 export default authenticateJWT;
-
+*/
 
 /* only JWT
-import jwt from "jsonwebtoken";
-import { secret } from "../config/jwt.js";
 
 const authenticateJWT = (req, res, next) => {
     const token = req.cookies.token;

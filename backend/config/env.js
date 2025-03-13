@@ -10,5 +10,6 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const nodeEnv = process.env.NODE_ENV || 'development';
+const state = process.env.STATE;
 
-export { nodeEnv };
+export { nodeEnv, state };

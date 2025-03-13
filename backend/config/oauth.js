@@ -11,6 +11,10 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const naver_id = process.env.NAVER_CLIENT_ID;
 const naver_secret = process.env.NAVER_CLIENT_SECRET;
-const naver_redirect = process.env.NAVER_REDIRECT_URI; 
+const naver_redirect = process.env.NAVER_REDIRECT_URI;
 
-export { naver_id, naver_secret, naver_redirect};
+const google_id = process.env.GOOGLE_CLIENT_ID;
+const google_secret = process.env.GOOGLE_CLIENT_SECRET;
+const google_redirect = process.env.GOOGLE_REDIRECT_URI;
+
+export { naver_id, naver_secret, naver_redirect, google_id, google_secret, google_redirect };

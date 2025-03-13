@@ -10,7 +10,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerOptions from './config/swaggerOptions.js';
 
 // 미들웨어
-import authenticateJWT from './middlewares/auth.js';
+// import authenticateJWT from './middlewares/auth.js';
 
 // PostgreSQL 클라이언트 생성
 const { Pool } = pg;
