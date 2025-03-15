@@ -156,3 +156,246 @@
  *                   type: string
  *                   example: "Internal Server Error"
  */
+/**
+ * @swagger
+ * paths:
+ *   /diary:
+ *     post:
+ *       summary: 새로운 다이어리 생성
+ *       description: 사용자 일기를 생성합니다.
+ *       tags:
+ *         - Diary
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user_id:
+ *                   type: string
+ *                   format: uuid
+ *                   example: "87ca1efa-4ac5-4a6a-8982-f2c58e6decd1"
+ *                 title:
+ *                   type: string
+ *                   example: "오늘의 일기"
+ *                 content:
+ *                   type: string
+ *                   example: "오늘은 날씨가 좋았다."
+ *                 mood_tags:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["happy", "excited"]
+ *                 spotify_track_id:
+ *                   type: string
+ *                   example: "3n3Ppam7vgaVa1iaRUc9Lp"
+ *       responses:
+ *         201:
+ *           description: 일기 생성 성공
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     format: uuid
+ *                     example: "550e8400-e29b-41d4-a716-446655440000"
+ *                   user_id:
+ *                     type: string
+ *                     format: uuid
+ *                   title:
+ *                     type: string
+ *                   content:
+ *                     type: string
+ *                   mood_tags:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   spotify_track_id:
+ *                     type: string
+ *         500:
+ *           description: 서버 에러
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: "서버 에러"
+ *                   error:
+ *                     type: string
+ *
+ *   /diary/{id}:
+ *     get:
+ *       summary: 특정 다이어리 조회
+ *       description: ID를 사용하여 다이어리 항목을 조회합니다.
+ *       tags:
+ *         - Diary
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           schema:
+ *             type: string
+ *             format: uuid
+ *           description: 조회할 다이어리의 UUID
+ *       responses:
+ *         200:
+ *           description: 다이어리 조회 성공
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     format: uuid
+ *                   user_id:
+ *                     type: string
+ *                     format: uuid
+ *                   title:
+ *                     type: string
+ *                   content:
+ *                     type: string
+ *                   mood_tags:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   spotify_track_id:
+ *                     type: string
+ *         404:
+ *           description: 다이어리를 찾을 수 없음
+ *         500:
+ *           description: 서버 에러
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: "서버 에러"
+ *                   error:
+ *                     type: string
+ */
+/**
+ * @swagger
+ * /diary/{id}:
+ *   patch:
+ *     summary: 다이어리 수정
+ *     description: ID를 사용하여 해당 다이어리의 정보를 수정합니다. (수정 가능한 필드는 title, content, mood_tags, spotify_track_id입니다.)
+ *     tags:
+ *       - Diary
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: 수정할 다이어리의 UUID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "오늘의 다이어리를 수정합니다"
+ *               content:
+ *                 type: string
+ *                 example: "수정된 내용"
+ *               mood_tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["busy", "tired"]
+ *               spotify_track_id:
+ *                 type: string
+ *                 example: "3n3Ppam7vgaVa1iaRUc9Lp"
+ *     responses:
+ *       200:
+ *         description: 수정 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                 user_id:
+ *                   type: string
+ *                   format: uuid
+ *                 title:
+ *                   type: string
+ *                 content:
+ *                   type: string
+ *                 mood_tags:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 spotify_track_id:
+ *                   type: string
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *       404:
+ *         description: 수정할 다이어리를 찾지 못함
+ *       500:
+ *         description: 서버 에러
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "서버 에러"
+ *                 error:
+ *                   type: string
+ *
+ *   delete:
+ *     summary: 다이어리 삭제
+ *     description: ID를 사용하여 해당 다이어리를 삭제합니다.
+ *     tags:
+ *       - Diary
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: 삭제할 다이어리의 UUID
+ *     responses:
+ *       200:
+ *         description: 삭제 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "삭제 성공"
+ *       404:
+ *         description: 삭제할 다이어리를 찾지 못함
+ *       500:
+ *         description: 서버 에러
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "서버 에러"
+ *                 error:
+ *                   type: string
+ */
