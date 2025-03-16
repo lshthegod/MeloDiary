@@ -1,11 +1,22 @@
-import { load_diary as diaryServiceLoad, create_diary as diaryServiceCreate, delete_diary as diaryServiceDelete, update_diary as diaryServiceUpdate } from '../services/diary.js';
+import { load_diaries as diariesServiceLoad, load_diary as diaryServiceLoad, create_diary as diaryServiceCreate, delete_diary as diaryServiceDelete, update_diary as diaryServiceUpdate } from '../services/diary.js';
+
+export async function load_diaries(req, res) {
+    const page = req.query.page || 1;
+    if (page < 1) page = 1;
+    try {
+        const diaries = await diariesServiceLoad(page);
+        res.json(diaries);
+    } catch (error) {
+        res.status(500).json({ message: '서버 에러', error: error.message });
+    }
+
+}
 
 export async function load_diary(req, res) {
     const { id } = req.params;
     try {
         const diary = await diaryServiceLoad(id);
-        console.log(diary);
-        res.send(diary);
+        res.json(diary);
     } catch (error) {
         res.status(500).json({ message: '서버 에러', error: error.message });
     }

@@ -67,7 +67,12 @@ pool.connect()
   });
 
 // 서버 시작
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`서버가 ${port}번 포트에서 실행 중입니다.`);
   console.log(`http://localhost:${port} 에서 접속할 수 있습니다.`);
+});
+
+server.on("error", (err) => {
+  console.error(`서버 오류 발생: ${err.message}`);
+  process.exit(1);
 });

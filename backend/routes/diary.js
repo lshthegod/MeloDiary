@@ -1,9 +1,9 @@
 import express from 'express';
-import { load_diary, create_diary, update_diary, delete_diary } from '../controllers/diary.js';
+import { load_diaries, load_diary, create_diary, update_diary, delete_diary } from '../controllers/diary.js';
 
 const router = express.Router();
 // prefix = '/diaries'
-// router.get('/', load_diaries);
+router.get('/', load_diaries);
 router.post('/', create_diary);
 router.get('/:id', load_diary);
 router.patch('/:id',update_diary);

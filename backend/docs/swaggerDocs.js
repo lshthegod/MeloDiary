@@ -36,6 +36,8 @@
  *   post:
  *     summary: 로그인
  *     description: 사용자의 이메일과 비밀번호를 이용해 로그인을 수행하고 JWT 토큰을 반환합니다.
+ *     tags:
+ *       - "Auth"
  *     requestBody:
  *       description: 로그인에 필요한 사용자 정보
  *       required: true
@@ -398,4 +400,38 @@
  *                   example: "서버 에러"
  *                 error:
  *                   type: string
+ */
+/**
+ * @swagger
+ * /diary:
+ *   get:
+ *     summary: 모든 다이어리 목록을 불러옵니다.
+ *     description: 데이터베이스에서 모든 다이어리를 가져옵니다.
+ *     tags:
+ *       - Diary
+ *     responses:
+ *       200:
+ *         description: 성공적으로 다이어리 목록을 반환합니다.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: 다이어리의 고유 ID
+ *                   title:
+ *                     type: string
+ *                     description: 다이어리 제목
+ *                   content:
+ *                     type: string
+ *                     description: 다이어리 내용
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *                     description: 작성된 날짜 및 시간
+ *       500:
+ *         description: 서버 오류 발생
  */

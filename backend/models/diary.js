@@ -18,15 +18,24 @@ class Diary {
     static async create(diaryData) {
         const { user_id, title, content, mood_tags = [], spotify_track_id = null } = diaryData;
         const query = `
-          INSERT INTO posts (user_id, title, content, mood_tags, spotify_track_id)
-          VALUES ($1, $2, $3, $4::VARCHAR[], $5)
-          RETURNING *;
+            INSERT INTO posts (user_id, title, content, mood_tags, spotify_track_id)
+            VALUES ($1, $2, $3, $4::VARCHAR[], $5)
+            RETURNING *;
         `;
         const values = [
-          user_id, title, content, mood_tags, spotify_track_id
+            user_id, title, content, mood_tags, spotify_track_id
         ];
         const { rows } = await pool.query(query, values);
         return new Diary(rows[0]);
+    }
+
+    static async getRecent(limit, offset) {
+        const query = `
+            SELECT id, title, created_at, content, likes_count, mood_tags
+            FROM posts ORDER BY created_at DESC LIMIT $1 OFFSET $2;`;
+        const { rows } = await pool.query(query, [limit, offset]);
+        return rows;
+        
     }
 
     static async findById(id) {

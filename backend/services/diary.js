@@ -1,5 +1,17 @@
 import Diary from '../models/diary.js';
 
+export const load_diaries = async (page = 1) => {
+    const limit = 5;
+    const offset = (page - 1) * limit;
+
+    const diaries = await Diary.getRecent(limit, offset);
+    if (!diaries) {
+        throw new Error('일기를 불러오지 못하였습니다');
+    }
+    return diaries;
+}
+
+
 export const load_diary = async (id) => {
     const diary = await Diary.findById(id);
     if (!diary) {
