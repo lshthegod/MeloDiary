@@ -70,6 +70,33 @@ class Diary {
         const { rows } = await pool.query(query, [id]);
         return rows.length ? new Diary(rows[0]) : null;
     }
+
+    static async addLike(userId, diaryId) {
+        const client = await pool.connect();
+        try {
+            await client.query('BEGIN');
+            const updateQuery = `
+                UPDATE diary 
+                SET liked_users = COALESCE(liked_users, '[]'::jsonb) || to_jsonb($1::uuid),
+                    likes_count = likes_count + 1 
+                WHERE id = $2
+                AND NOT (
+                    COALESCE(liked_users, '[]'::jsonb) 
+                    @> ('["' || $1::text || '"]')::jsonb
+                )
+                RETURNING *;
+            `;
+            const values = [userId, diaryId];
+            const result = await client.query(updateQuery, values);
+            await client.query('COMMIT');
+            return result.rows[0];
+        } catch (error) {
+            await client.query('ROLLBACK');
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
 }
 
 export default Diary;

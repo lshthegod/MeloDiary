@@ -435,3 +435,58 @@
  *       500:
  *         description: 서버 오류 발생
  */
+/**
+ * @swagger
+ * /diary/{id}/like:
+ *   post:
+ *     summary: 다이어리 좋아요 추가
+ *     description: 특정 다이어리에 좋아요를 추가합니다. 이미 좋아요를 누른 경우 중복 처리가 방지됩니다.
+ *     tags:
+ *       - Diary
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: 좋아요를 추가할 다이어리의 ID
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: 좋아요 추가 성공. 업데이트된 다이어리 정보를 반환합니다.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: 다이어리 ID
+ *                 liked_users:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: 좋아요를 누른 사용자 ID 리스트
+ *                 likes_count:
+ *                   type: integer
+ *                   description: 좋아요 총 갯수
+ *       400:
+ *         description: 잘못된 요청 - 다이어리 ID가 유효하지 않음.
+ *       401:
+ *         description: 인증 실패 - 유효한 JWT 토큰 필요.
+ *       500:
+ *         description: 서버 에러 발생.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 서버 에러
+ *                 error:
+ *                   type: string
+ *                   description: 에러 상세 메시지
+ * 
+ */
