@@ -23,7 +23,7 @@ const port = 3000;
 app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
 app.use(cookieParser());
-// app.use(authenticateJWT); 모든 라우터에 대한 로그인 인증 보안
+app.use(authenticateJWT); // 모든 라우터에 대한 로그인 인증 보안
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

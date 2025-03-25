@@ -490,3 +490,194 @@
  *                   description: 에러 상세 메시지
  * 
  */
+/**
+ * @swagger
+ * /diary/{id}/like:
+ *   delete:
+ *     summary: 좋아요 취소
+ *     description: 특정 일기에 대해 사용자의 좋아요를 취소합니다.
+ *     tags:
+ *       - Diary
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: 좋아요를 취소할 일기의 ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 description: 좋아요를 취소할 사용자 ID
+ *     responses:
+ *       200:
+ *         description: 좋아요가 성공적으로 취소됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Like removed
+ *                 post:
+ *                   type: object
+ *                   description: 업데이트된 게시글 정보
+ *       400:
+ *         description: 잘못된 요청
+ *       404:
+ *         description: 해당 게시글 또는 사용자 없음
+ *       500:
+ *         description: 서버 오류
+ */
+/**
+ * @swagger
+ * /diary/{id}/comment:
+ *   post:
+ *     summary: 댓글 작성
+ *     description: 특정 게시글에 댓글을 추가합니다.  
+ *                  `userId`는 인증 토큰에서 자동으로 처리되므로 전송하지 않아도 됩니다.
+ *     tags:
+ *       - Diary
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: 댓글을 추가할 게시글의 ID (diaryId)
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               content:
+ *                 type: string
+ *                 example: 이 글 너무 좋아요!
+ *     responses:
+ *       200:
+ *         description: 댓글이 성공적으로 추가됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Comment added
+ *                 post:
+ *                   type: object
+ *       400:
+ *         description: 잘못된 요청
+ *       500:
+ *         description: 서버 오류
+ */
+/**
+ * @swagger
+ * /diary/{id}/comment/{commentId}:
+ *   patch:
+ *     summary: 댓글 수정
+ *     description: 해당 댓글의 내용을 수정합니다.  
+ *                  `userId`는 인증 토큰에서 자동으로 처리됩니다.
+ *     tags:
+ *       - Diary
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: 게시글 ID (diaryId)
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *       - in: path
+ *         name: commentId
+ *         required: true
+ *         description: 수정할 댓글의 ID
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               content:
+ *                 type: string
+ *                 example: 수정된 댓글 내용입니다.
+ *     responses:
+ *       200:
+ *         description: 댓글이 성공적으로 수정됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Comment updated
+ *                 post:
+ *                   type: object
+ *       400:
+ *         description: 잘못된 요청
+ *       404:
+ *         description: 댓글 또는 게시글을 찾을 수 없음
+ *       500:
+ *         description: 서버 오류
+ */
+/**
+ * @swagger
+ * /diary/{id}/comment/{commentId}:
+ *   delete:
+ *     summary: 댓글 삭제
+ *     description: 특정 게시글의 특정 댓글을 삭제합니다.  
+ *                  `userId`는 인증 토큰에서 자동으로 처리되므로 전송하지 않아도 됩니다.
+ *     tags:
+ *       - Diary
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: 게시글 ID (diaryId)
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *       - in: path
+ *         name: commentId
+ *         required: true
+ *         description: 삭제할 댓글의 ID
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: 댓글이 성공적으로 삭제됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Comment deleted
+ *                 post:
+ *                   type: object
+ *       400:
+ *         description: 잘못된 요청
+ *       404:
+ *         description: 댓글 또는 게시글을 찾을 수 없음
+ *       500:
+ *         description: 서버 오류
+ */

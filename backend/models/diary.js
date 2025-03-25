@@ -1,4 +1,5 @@
 import pool from '../server.js';
+import { v4 as uuidv4 } from 'uuid';
 
 class Diary {
     constructor({ id, user_id, title, content, created_at, updated_at, mood_tags, spotify_track_id, comments, liked_users, likes_count }) {
@@ -72,30 +73,109 @@ class Diary {
     }
 
     static async addLike(userId, diaryId) {
-        const client = await pool.connect();
-        try {
-            await client.query('BEGIN');
-            const updateQuery = `
-                UPDATE diary 
-                SET liked_users = COALESCE(liked_users, '[]'::jsonb) || to_jsonb($1::uuid),
-                    likes_count = likes_count + 1 
-                WHERE id = $2
-                AND NOT (
-                    COALESCE(liked_users, '[]'::jsonb) 
-                    @> ('["' || $1::text || '"]')::jsonb
+        const updateQuery = `
+            UPDATE posts 
+            SET liked_users = liked_users || to_jsonb($1::text),
+                likes_count = likes_count + 1 
+            WHERE id = $2
+            AND NOT (
+                liked_users @> to_jsonb(ARRAY[$1::text])
+            )
+            RETURNING *;
+        `;
+        const values = [userId, diaryId];
+        
+        const { rows } = await pool.query(updateQuery, values);
+        return rows[0];
+    }
+    
+    static async DeleteLike(userId, diaryId) {
+        const query = `
+            UPDATE posts
+            SET 
+            liked_users = COALESCE(
+                (
+                SELECT jsonb_agg(elem)
+                FROM jsonb_array_elements(liked_users) AS elem
+                WHERE elem <> to_jsonb($1::text)
+                ), '[]'::jsonb
+            ),
+            likes_count = likes_count - 1
+            WHERE id = $2
+            AND liked_users @> to_jsonb(ARRAY[$1::text])
+            RETURNING *;
+        `;
+        const values = [userId, diaryId];
+      
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    }
+    static async createComment(userId, diaryId, content) {
+        const comment = {
+            id: uuidv4(),
+            user_id: userId,
+            content: content,
+            created_at: new Date().toISOString()
+        };
+    
+        const query = `
+            UPDATE posts
+            SET comments = COALESCE(comments, '[]'::jsonb) || to_jsonb($1::json)
+            WHERE id = $2
+            RETURNING *;
+        `;
+    
+        const values = [comment, diaryId];
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    }
+    static async updateComment(userId, diaryId, commentId, content) {
+        const query = `
+            UPDATE posts
+            SET comments = (
+                SELECT jsonb_agg(
+                    CASE
+                        WHEN elem->>'id' = $3 AND elem->>'user_id' = $1 THEN
+                            jsonb_set(elem, '{content}', to_jsonb($4::text))
+                        ELSE
+                            elem
+                    END
                 )
-                RETURNING *;
-            `;
-            const values = [userId, diaryId];
-            const result = await client.query(updateQuery, values);
-            await client.query('COMMIT');
-            return result.rows[0];
-        } catch (error) {
-            await client.query('ROLLBACK');
-            throw error;
-        } finally {
-            client.release();
-        }
+                FROM jsonb_array_elements(comments) AS elem
+            )
+            WHERE id = $2
+            AND comments @> to_jsonb(ARRAY[
+                jsonb_build_object('id', $3::text, 'user_id', $1::text)
+            ])
+            RETURNING *;
+        `;
+
+        const values = [userId, diaryId, commentId, content];
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    }
+    static async deleteComment(userId, diaryId, commentId) {
+        const query = `
+            UPDATE posts
+            SET 
+            comments = COALESCE(
+                (
+                SELECT jsonb_agg(elem)
+                FROM jsonb_array_elements(comments) AS elem
+                WHERE NOT (
+                    elem->>'id' = $3 AND elem->>'user_id' = $1
+                )
+            ), '[]'::jsonb
+            )
+            WHERE id = $2
+            AND comments @> to_jsonb(ARRAY[
+                jsonb_build_object('id', $3::text, 'user_id', $1::text)
+            ])
+            RETURNING *;
+        `;
+        const values = [userId, diaryId, commentId];
+        const result = await pool.query(query, values);
+        return result.rows[0];
     }
 }
 
