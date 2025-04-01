@@ -1,0 +1,8 @@
+/* src/app/globals.css */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #f3ebdf;
+    font-family: 'Georgia', 'Times New Roman', serif;
+  }
+  
