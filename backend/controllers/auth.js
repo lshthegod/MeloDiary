@@ -14,7 +14,7 @@ export async function login(req, res) {
     }
     // 로그인 성공
     res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-    return res.redirect('/');
+    return res.status(200).json({ success: true, redirectUrl: '/diary' });
   } catch (error) {
     // 예외 발생 시 서버 에러 응답
     res.status(500).json({ message: '서버 에러', error: error.message });
@@ -28,10 +28,7 @@ export async function signup(req, res) {
     if (!user) {
       return res.status(401).json({ message: '회원가입 실패' });
     }
-    return res.status(201).json({
-      message: '회원가입 성공',
-      user: { id: user.id, username: user.username, email: user.email },
-    });
+    return res.status(201).json({ message: '회원가입 성공', success: true, redirectUrl: '/login' });
   } catch (error) {
     res.status(500).json({ message: '서버 에러', error: error.message });
   }
