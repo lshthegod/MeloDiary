@@ -19,3 +19,10 @@ export const signup = async (username, email, password) => {
     }
     return { id: user.id, username: user.username, email: user.email };
 }
+
+export const logout = async (res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production'
+    });
+}

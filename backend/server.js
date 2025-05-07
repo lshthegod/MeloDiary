@@ -18,7 +18,7 @@ const { Pool } = pg;
 
 // Express 앱 생성
 const app = express();
-const port = 3001;
+const port = 3000;
 
 // 미들웨어
 app.use(express.json());  // JSON 요청을 파싱하는 미들웨어

@@ -1,5 +1,4 @@
-import { login as authServiceLogin, signup as authServiceSignUp} from '../services/auth.js';
-import { nodeEnv } from '../config/env.js'
+import { login as authServiceLogin, signup as authServiceSignUp, logout as authServiceLogout } from '../services/auth.js';
 
 // 클라이언트로부터 받은 로그인 요청 처리 함수
 export async function login(req, res) {
@@ -32,4 +31,9 @@ export async function signup(req, res) {
   } catch (error) {
     res.status(500).json({ message: '서버 에러', error: error.message });
   }
+}
+
+export async function logout(req, res) {
+  authServiceLogout(res);
+  res.status(200).json({ message: '로그아웃 성공' });
 }
