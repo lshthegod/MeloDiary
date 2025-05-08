@@ -34,16 +34,19 @@ body {
   font-size: 1rem;
   color: #4b3e35;
   cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
 }
 
 .nav-button:hover {
-  text-decoration: underline;
+  background-color: #e1d4c3;
 }
 
 .diary-container {
     background-color: #d6ccc2;
     padding: 2rem 1rem;
-    max-width: 1000px; /* ✅ 일기 폭 늘림 */
+    width: 50%;
     margin: 0 auto;
     flex-grow: 1;
     border-radius: 16px; /* ✅ 둥글게 변경 */
@@ -158,4 +161,79 @@ body {
     gap: 2rem;
     margin-top: 2rem;
   }
+  
+.new-diary-form {
+  background-color: #fffdf8;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.diary-textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 1.2rem;
+  border: 1.5px solid #d1b7a1;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #5a4635;
+  resize: none;
+  margin-bottom: 1.5rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.diary-textarea::placeholder {
+  color: #8e7965;
+}
+
+.diary-form-buttons {
+  display: flex;
+  gap: 1.2rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.submit-button,
+.cancel-button {
+  padding: 1rem 2.2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: #d1b7a1;
+  color: #5a4635;
+  transition: background-color 0.2s;
+}
+
+.cancel-button {
+  background-color: #e1d4c3;
+}
+
+.submit-button:hover {
+  background-color: #c8ab94;
+}
+
+.cancel-button:hover {
+  background-color: #d6ccc2;
+}
+
+.diary-title-input {
+  width: 100%;
+  padding: 1rem;
+  border: 1.5px solid #d1b7a1;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #5a4635;
+  margin-bottom: 1.2rem;
+  background: #fff;
+  box-sizing: border-box;
+}
   
