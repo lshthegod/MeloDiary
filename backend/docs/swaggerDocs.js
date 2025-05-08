@@ -681,3 +681,59 @@
  *       500:
  *         description: 서버 오류
  */
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: 로그아웃
+ *     tags:
+ *       - Auth
+ *     responses:
+ *       '200':
+ *         description: 로그아웃 성공 (쿠키 삭제)
+ */
+/**
+ * @swagger
+ * /profile:
+ *   get:
+ *     summary: 사용자 프로필 조회
+ *     description: JWT 토큰을 기반으로 로그인된 사용자의 프로필 정보를 반환합니다.
+ *     tags:
+ *       - Profile
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: 프로필 정보 조회 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                   example: "a2c8e7fa-9e8c-4a7d-a2ec-df3a17386b2f"
+ *                 username:
+ *                   type: string
+ *                   example: "alice"
+ *                 email:
+ *                   type: string
+ *                   example: "alice@example.com"
+ *                 diary:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         format: uuid
+ *                         example: "d87d6fd1-2ac4-4db2-bce1-58c3b6811a59"
+ *                       title:
+ *                         type: string
+ *                         example: "오늘 하루 요약"
+ *       '401':
+ *         description: 인증 실패 (JWT 누락 또는 만료됨)
+ *       '500':
+ *         description: 서버 에러
+ */

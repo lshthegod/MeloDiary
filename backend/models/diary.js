@@ -44,7 +44,16 @@ class Diary {
         const { rows } = await pool.query(query, [id]);
         return rows.length ? new Diary(rows[0]) : null;
     }
-    
+    static async findByUserId(userId) {
+        const query = `
+            SELECT id, title
+            FROM posts
+            WHERE user_id = $1
+            ORDER BY created_at DESC;
+        `;
+        const { rows } = await pool.query(query, [userId]);
+        return rows;
+    }
     static async update(id, updateData) {
         const existingDiary = await Diary.findById(id);
         if (!existingDiary) return null;
