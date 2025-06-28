@@ -1,6 +1,11 @@
 import { create_comment as diaryServiceComment, delete_comment as diaryServiceDeleteComment, update_comment as diaryServiceUpdateComment } from '../services/Comment.js'
 
 export async function create_comment(req, res) {
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
     const userId = req.user.id;
     const diaryId = req.params.id;
     const content = req.body.content;
@@ -13,6 +18,11 @@ export async function create_comment(req, res) {
 }
 
 export async function update_comment(req, res) {
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
     const userId = req.user.id;
     const diaryId = req.params.id;
     const commentId = req.params.commentId;
@@ -26,6 +36,11 @@ export async function update_comment(req, res) {
 }
 
 export async function delete_comment(req, res) {
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
     const userId = req.user.id;
     const diaryId = req.params.id;
     const commentId = req.params.commentId;

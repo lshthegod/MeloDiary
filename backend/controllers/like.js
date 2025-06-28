@@ -1,6 +1,11 @@
 import { like as diaryServiceLike, deleteLike as diaryServiceDeleteLike } from '../services/like.js';
 
 export async function like(req, res) {
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
     const userId = req.user.id;
     const diaryId = req.params.id;
     try {
@@ -12,6 +17,11 @@ export async function like(req, res) {
 }
 
 export async function delete_like(req, res) {
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
     const userId = req.user.id;
     const diaryId = req.params.id;
     try {

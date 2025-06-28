@@ -13,7 +13,6 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchUserInfo();
-    fetchUserDiaries();
   }, []);
 
   const fetchUserInfo = async () => {
@@ -23,24 +22,16 @@ export default function ProfilePage() {
       });
       const data = await res.json();
       if (res.ok) {
-        setUserInfo(data);
+        setUserInfo({
+          username: data.username,
+          email: data.email,
+          createdAt: data.createdAt || data.created_at,
+        });
+        // diary 필드에서 일기 목록 가져오기
+        setUserDiaries(data.diary || []);
       }
     } catch (error) {
       console.error('프로필 정보를 불러오는데 실패했습니다:', error);
-    }
-  };
-
-  const fetchUserDiaries = async () => {
-    try {
-      const res = await fetch('http://localhost:3001/profile/diaries', {
-        credentials: 'include',
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setUserDiaries(data);
-      }
-    } catch (error) {
-      console.error('일기 목록을 불러오는데 실패했습니다:', error);
     }
   };
 
@@ -74,24 +65,29 @@ export default function ProfilePage() {
           <div className="user-info">
             <p><strong>사용자 이름:</strong> {userInfo.username}</p>
             <p><strong>이메일:</strong> {userInfo.email}</p>
-            <p><strong>가입일:</strong> {new Date(userInfo.createdAt).toLocaleDateString()}</p>
+            <p><strong>가입일:</strong> {userInfo.createdAt ? new Date(userInfo.createdAt).toLocaleDateString() : '정보 없음'}</p>
           </div>
         </section>
 
         <section className="user-diaries">
           <h2>내가 작성한 일기</h2>
           <div className="diary-list">
-            {userDiaries.map((diary) => (
-              <div key={diary.id} className="diary-card">
-                <p className="diary-content">{diary.content}</p>
-                <div className="diary-meta">
-                  <span className="diary-date">
-                    {new Date(diary.created_at).toLocaleString()}
-                  </span>
-                  <span className="diary-likes">좋아요 {diary.likes_count}</span>
+            {userDiaries.length > 0 ? (
+              userDiaries.map((diary) => (
+                <div key={diary.id} className="diary-card">
+                  <h3 className="diary-title">{diary.title}</h3>
+                  <p className="diary-content">{diary.content}</p>
+                  <div className="diary-meta">
+                    <span className="diary-date">
+                      {new Date(diary.created_at).toLocaleString()}
+                    </span>
+                    <span className="diary-likes">좋아요 {diary.likes_count || 0}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="no-diaries">아직 작성한 일기가 없습니다.</p>
+            )}
           </div>
         </section>
       </main>
