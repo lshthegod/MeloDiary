@@ -46,7 +46,7 @@ class Diary {
     }
     static async findByUserId(userId) {
         const query = `
-            SELECT id, title
+            SELECT id, title, content, created_at, likes_count
             FROM posts
             WHERE user_id = $1
             ORDER BY created_at DESC;

@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.profile-header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f2eade;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4b3e35;
+}
+
+.profile-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #4b3e35;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.nav-button:hover {
+  background-color: #e1d4c3;
+}
+
+.profile-container {
+  background-color: #d6ccc2;
+  padding: 2rem 1rem;
+  width: 50%;
+  margin: 0 auto;
+  flex-grow: 1;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-info {
+  background-color: #fffdf8;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  width: 90%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.profile-info h2 {
+  color: #4b3e35;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.user-info p {
+  margin: 0.8rem 0;
+  color: #5a4635;
+  font-size: 1.1rem;
+}
+
+.user-diaries {
+  background-color: #fffdf8;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 90%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.user-diaries h2 {
+  color: #4b3e35;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.diary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.diary-card {
+  background-color: #fffdf8;
+  border: 1px solid #e1d4c3;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.diary-card:hover {
+  transform: translateY(-2px);
+}
+
+.diary-content {
+  color: #5a4635;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.diary-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #7d6c5d;
+  font-size: 0.9rem;
+}
+
+.diary-date {
+  font-style: italic;
+}
+
+.diary-likes {
+  color: #d1b7a1;
+  font-weight: bold;
+}
+

@@ -24,6 +24,13 @@ export async function load_diary(req, res) {
 
 export async function create_diary(req, res) {
     const diaryData = req.body;
+    
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
+    diaryData.user_id = req.user.id;
     try {
         const newDiary = await diaryServiceCreate(diaryData);
         res.status(201).json(newDiary);
@@ -35,6 +42,12 @@ export async function create_diary(req, res) {
 export async function update_diary(req, res) {
     const { id } = req.params;
     const updateData = req.body;
+    
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
     try {
         const updatedDiary = await diaryServiceUpdate(id, updateData);
         if (!updatedDiary) {
@@ -48,13 +61,19 @@ export async function update_diary(req, res) {
 
 export async function delete_diary(req, res) {
     const { id } = req.params; 
+    
+    // user_id가 없으면 에러 반환
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    
     try {
         const deletedDiary = await diaryServiceDelete(id);
         if (!deletedDiary) {
             return res.status(404).json({ message: '삭제할 다이어리를 찾지 못했습니다.' });
         }
+        res.json({ message: '일기가 성공적으로 삭제되었습니다.' });
     } catch (error) {
         res.status(500).json({ message: '서버 에러', error: error.message });
     }
-    
 }
