@@ -1,4 +1,4 @@
-import { create_comment as diaryServiceComment, delete_comment as diaryServiceDeleteComment, update_comment as diaryServiceUpdateComment } from '../services/Comment.js'
+import { create_comment as diaryServiceComment, delete_comment as diaryServiceDeleteComment, update_comment as diaryServiceUpdateComment } from '../services/comment.js'
 
 export async function create_comment(req, res) {
     // user_id가 없으면 에러 반환
