@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import './HomePage.css';
+import { apiFetch, API_ENDPOINTS } from '../utils/api.js';
 
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,9 +14,7 @@ export default function HomePage() {
 
   const checkLoginStatus = async () => {
     try {
-      const res = await fetch('http://localhost:3001/check-auth', {
-        credentials: 'include',
-      });
+      const res = await apiFetch(API_ENDPOINTS.CHECK_AUTH);
       const data = await res.json();
       setIsLoggedIn(data.isLoggedIn);
     } catch (error) {

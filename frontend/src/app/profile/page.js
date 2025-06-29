@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
+import { apiFetch, API_ENDPOINTS } from '../../utils/api.js';
 
 export default function ProfilePage() {
   const [userInfo, setUserInfo] = useState({
@@ -17,9 +18,7 @@ export default function ProfilePage() {
 
   const fetchUserInfo = async () => {
     try {
-      const res = await fetch('http://localhost:3001/profile', {
-        credentials: 'include',
-      });
+      const res = await apiFetch(API_ENDPOINTS.PROFILE);
       const data = await res.json();
       if (res.ok) {
         setUserInfo({
@@ -37,9 +36,8 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('http://localhost:3001/logout', {
+      const res = await apiFetch(API_ENDPOINTS.LOGOUT, {
         method: 'POST',
-        credentials: 'include',
       });
       if (res.ok) {
         window.location.href = '/';

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import './DiaryPage.css';
+import { apiFetch, API_ENDPOINTS } from '../../utils/api.js';
 
 export default function DiaryPage() {
   const [diaries, setDiaries] = useState([]);
@@ -12,9 +13,7 @@ export default function DiaryPage() {
   const [newDiaryContent, setNewDiaryContent] = useState('');
 
   const fetchDiaries = async () => {
-    const res = await fetch(`http://localhost:3001/diary?page=${page}`, {
-      credentials: 'include',
-    });
+    const res = await apiFetch(API_ENDPOINTS.DIARY_WITH_PAGE(page));
     const data = await res.json();
 
     if (data.length === 0) {
@@ -47,12 +46,8 @@ export default function DiaryPage() {
     }
 
     try {
-      const res = await fetch('http://localhost:3001/diary', {
+      const res = await apiFetch(API_ENDPOINTS.DIARY, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
         body: JSON.stringify({ title: newDiaryTitle, content: newDiaryContent }),
       });
 
@@ -77,9 +72,8 @@ export default function DiaryPage() {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('http://localhost:3001/logout', {
+      const res = await apiFetch(API_ENDPOINTS.LOGOUT, {
         method: 'POST',
-        credentials: 'include',
       });
       if (res.ok) {
         window.location.href = '/';

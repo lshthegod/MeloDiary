@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from "next/link";
 import './SignupPage.css';
+import { apiFetch, API_ENDPOINTS } from '../../utils/api.js';
 
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,11 +36,8 @@ export default function SignupPage() {
     }
 
     try {
-      const res = await fetch('http://localhost:3001/signup/submit', {
+      const res = await apiFetch(API_ENDPOINTS.SIGNUP, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({ username, email, password }),
       });
 

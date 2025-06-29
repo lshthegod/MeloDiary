@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from "next/link";
 import './LoginPage.css';
+import { apiFetch, API_ENDPOINTS } from '../../utils/api.js';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -10,12 +11,8 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch('http://localhost:3001/login', {
+      const res = await apiFetch(API_ENDPOINTS.LOGIN, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
       
