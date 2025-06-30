@@ -39,7 +39,7 @@ export const apiFetch = async (endpoint, options = {}) => {
   // 401/403 응답 처리 - 자동으로 로그인 페이지로 리다이렉트
   if (response.status === 401 || response.status === 403) {
     console.log('인증 실패 - 로그인 페이지로 리다이렉트');
-    window.location.href = '/login';
+    // window.location.href = '/login';
     return response; // 리다이렉트 후에도 response 반환 (컴포넌트에서 추가 처리 방지)
   }
   
