@@ -12,7 +12,7 @@ export async function login(req, res) {
       return res.status(401).json({ message: '로그인 실패: 유효하지 않은 자격 증명' });
     }
     // 로그인 성공
-    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'None' });
     return res.status(200).json({ success: true, redirectUrl: '/diary' });
   } catch (error) {
     // 예외 발생 시 서버 에러 응답

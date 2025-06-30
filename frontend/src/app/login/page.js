@@ -13,6 +13,7 @@ export default function LoginPage() {
     try {
       const res = await apiFetch(API_ENDPOINTS.LOGIN, {
         method: 'POST',
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
       
