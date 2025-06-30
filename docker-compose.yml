@@ -18,6 +18,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: seohyun7/melodiary:latest
     ports:
       - "3001:3001"
     environment:

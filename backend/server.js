@@ -31,6 +31,7 @@ const port = process.env.PORT || 3001;
 const allowedOrigins = [
   'http://localhost:3000',
   'http://127.0.0.1:3000',
+  'https://melodiary.store',
   process.env.FRONTEND_URL // 환경 변수에서 프론트엔드 URL 가져오기
 ].filter(Boolean); // undefined 값 제거
 
@@ -55,6 +56,20 @@ app.use(cors({
 app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
 app.use(cookieParser());
+
+app.options('*', cors({
+  origin: function (origin, callback) {
+    if (process.env.NODE_ENV === 'development') {
+      return callback(null, true);
+    }
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS 정책에 의해 차단됨'));
+    }
+  },
+  credentials: true,
+}));
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
