@@ -3,17 +3,14 @@ import { login as authServiceLogin, signup as authServiceSignUp, logout as authS
 // 클라이언트로부터 받은 로그인 요청 처리 함수
 export async function login(req, res) {
   const { email, password } = req.body;
-  console.log(`로그인 요청 받음 email: ${email}, password: ${password}`);
   try {
     // 서비스 계층에서 로그인 로직 수행
     const token = await authServiceLogin(email, password);
-    console.log(`로그인 시도 process.env.NODE_ENV: ${process.env.NODE_ENV}`);
     // 로그인 실패 (예: 유효하지 않은 자격증명)
     if (!token) {
       return res.status(401).json({ message: '로그인 실패: 유효하지 않은 자격 증명' });
     }
     // 로그인 성공
-    console.log(`로그인 성공 process.env.NODE_ENV: ${process.env.NODE_ENV}`);
     res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
     return res.status(200).json({ success: true, redirectUrl: '/diary' });
   } catch (error) {
