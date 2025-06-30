@@ -11,7 +11,6 @@ export const API_ENDPOINTS = {
   LOGIN: '/login',
   SIGNUP: '/signup/submit',
   LOGOUT: '/logout',
-  CHECK_AUTH: '/check-auth',
   PROFILE: '/profile',
   DIARY: '/diary',
   DIARY_WITH_PAGE: (page) => `/diary?page=${page}`,
@@ -36,5 +35,13 @@ export const apiFetch = async (endpoint, options = {}) => {
     },
   };
 
-  return fetch(url, finalOptions);
+  const response = await fetch(url, finalOptions);
+  // 401/403 응답 처리 - 자동으로 로그인 페이지로 리다이렉트
+  if (response.status === 401 || response.status === 403) {
+    console.log('인증 실패 - 로그인 페이지로 리다이렉트');
+    window.location.href = '/login';
+    return response; // 리다이렉트 후에도 response 반환 (컴포넌트에서 추가 처리 방지)
+  }
+  
+  return response;
 }; 

@@ -4,20 +4,17 @@ import { secret } from "../config/jwt.js";
 const authenticateJWT = (req, res, next) => {
     const token = req.cookies.token;
 
-    // 토큰이 없으면 기본값 설정
     if (!token) {
-        req.user = null;
-        return next();
+        console.log("Unauthorized");
+        return res.status(401).json({ message: "Unauthorized" });
     }
 
     jwt.verify(token, secret, (err, user) => {
         if (err) {
-            // 토큰이 유효하지 않으면 기본값 설정
-            req.user = null;
-            return next();
+            console.log("Forbidden");
+            return res.status(403).json({ message: "Forbidden" });
         }
-        
-        // 토큰이 유효하면 user 정보 설정
+
         req.user = user;
         next();
     });

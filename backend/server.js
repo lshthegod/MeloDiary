@@ -10,18 +10,15 @@ import cors from 'cors';
 dotenv.config();
 
 // 환경 변수 로드 확인 로그
-console.log('환경 변수 로드 상태:');
-console.log('- NODE_ENV:', process.env.NODE_ENV);
-console.log('- PORT:', process.env.PORT);
-console.log('- FRONTEND_URL:', process.env.FRONTEND_URL);
+// console.log('환경 변수 로드 상태:');
+// console.log('- NODE_ENV:', process.env.NODE_ENV);
+// console.log('- PORT:', process.env.PORT);
+// console.log('- FRONTEND_URL:', process.env.FRONTEND_URL);
 
 // Swagger
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerOptions from './config/swaggerOptions.js';
-
-// 미들웨어
-import authenticateJWT from './middlewares/auth.js';
 
 // PostgreSQL 클라이언트 생성
 const { Pool } = pg;
@@ -58,7 +55,6 @@ app.use(cors({
 app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
 app.use(cookieParser());
-app.use(authenticateJWT); // 모든 라우터에 대한 로그인 인증 보안
 
 // Swagger 문서 생성
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
@@ -70,26 +66,6 @@ export default pool;
 // Swagger UI 경로 설정
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-/* 기본 라우터
-app.get('/', async (req, res) => {
-  try {
-    // 풀에서 클라이언트를 가져옵니다.
-    const client = await pool.connect();
-    
-    // 간단한 쿼리 실행 (현재 시간 조회)
-    const result = await client.query('SELECT NOW()');
-    
-    // 사용 후 클라이언트 반환
-    client.release();
-    
-    // 쿼리 결과를 클라이언트에 응답합니다.
-    res.send(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('데이터베이스 연결 오류');
-  }
-});
-*/
 app.use(routes);
 
 pool.connect()
