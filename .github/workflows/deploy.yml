@@ -39,10 +39,10 @@ jobs:
     - name: Deploy on EC2
       run: |
         ssh -o StrictHostKeyChecking=no -i desktop.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          docker pull seohyun7/melodiary:latest
-          docker stop melodiary || true
-          docker rm melodiary || true
-          docker run -d \
+          ps docker pull seohyun7/melodiary:latest
+          ps docker stop melodiary || true
+          ps docker rm melodiary || true
+          ps docker run -d \
             -p 3001:3001 \
             --name melodiary \
             --env-file /home/ubuntu/.env \
