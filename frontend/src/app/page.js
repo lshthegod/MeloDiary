@@ -48,7 +48,7 @@ export default function HomePage() {
       </main>
 
       <footer className="home-footer">
-        <p>&copy; 2024 MeloDiary. All rights reserved.</p>
+        <p>&copy; 2025 MeloDiary. All rights reserved.</p>
       </footer>
     </div>
   );
