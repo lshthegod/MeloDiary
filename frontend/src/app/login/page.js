@@ -21,7 +21,6 @@ export default function LoginPage() {
       if (res.ok && data.success) {
         window.location.href = data.redirectUrl;
       } else {
-        const data = await res.json();
         alert(data.message || '로그인 실패');
       }
     } catch (error) {
