@@ -5,6 +5,7 @@ import config from './config/postgresql.js';
 import routes from './routes/index.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import morgan from 'morgan';
 
 // 환경 변수 로드
 dotenv.config();
@@ -53,6 +54,7 @@ app.use(cors({
 }));
 
 // 미들웨어
+app.use(morgan('dev'));
 app.use(express.json());  // JSON 요청을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: true }));  // form 데이터 파싱 미들웨어
 app.use(cookieParser());
